@@ -1,0 +1,7 @@
+{
+    "env_path": "",
+    
+    "expire_days": 60,
+    "inactive_days": 15
+
+}
