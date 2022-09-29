@@ -12,7 +12,7 @@ def connect(mongo_uri, database, collection_name):
     Connect to mongodb database and return collection
     """
 
-    with console.status("[bright_magenta]Connecting to DataBase...") as _:
+    with console.status("[bright_magenta]Connecting to Database...") as _:
         try:
             client = MongoClient(mongo_uri)
             console.log("[bright_green]Fetched Client[/bright_green]✅")
@@ -22,7 +22,7 @@ def connect(mongo_uri, database, collection_name):
             console.log(f"Error: {error}")
 
         try:
-            db = client[database]
+            dbs = client[database]
             console.log("[bright_green]Fetched DataBase[/bright_green]✅")
         except Exception as error:
             console.log(
@@ -30,7 +30,7 @@ def connect(mongo_uri, database, collection_name):
             console.log(f"Error: {error}")
 
         try:
-            collection = db[collection_name]
+            collection = dbs[collection_name]
             console.log("[bright_green]Fetched Collection[/bright_green]✅")
         except Exception as error:
             console.log(
@@ -40,7 +40,7 @@ def connect(mongo_uri, database, collection_name):
     return collection
 
 
-def setup(collection, expire_days: int, inactive_days: int) -> None:
+def setup(collection, expire_days=60, inactive_days=15) -> None:
     """
     Create Index to automatically drop documents
     """
@@ -101,29 +101,48 @@ def store(collection, chotu_url: str, original_url: str) -> bool:
     return True
 
 
-def update_view(collection, chotu_url, value=1, extend_date=datetime.utcnow()):
+def update_view(collection, chotu_url, value=1, extend_date=datetime.utcnow()) -> bool:
     """
     Update the view of url and extends the expire-inactive
     """
-    # check if url exists
-    if exists(collection, chotu_url):
-        # update the view
-        try:
-            collection.update_one(
-                {"_id": chotu_url}, {
-                    # increment views
-                    "$inc": {"views": value},
-                    "$set": {"expireInactiveAt": extend_date}
-                }
-            )
-            console.log(
-                f"[bright_green]Successfully updated view and expireInactiveAt \
-                    for `{chotu_url}[/bright_green]✅")
-        except Exception as error:
-            console.log(
-                f"[bright_red]Error occured while updating view or expireInactiveAt \
-                    for `{chotu_url}`[/bright_red]❌")
-            console.log(f"Error: {error}")
+    # update the view
+    try:
+        collection.update_one(
+            {"_id": chotu_url}, {
+                # increment views
+                "$inc": {"views": value},
+                "$set": {"expireInactiveAt": extend_date}
+            }
+        )
+        console.log(
+            "[bright_green]Successfully updated view and expireInactiveAt" \
+                f"for `{chotu_url}`[/bright_green]✅")
+    except Exception as error:
+        console.log(
+            "[bright_red]Error occured while updating view or expireInactiveAt" \
+                f"for `{chotu_url}`[/bright_red]❌")
+        console.log(f"Error: {error}")
 
-        return True
-    return False
+    return True
+
+
+def lookup(collection, chotu_url) -> str:
+    """
+    Return original url associated with chotu url
+    update view and extend inactive date
+    """
+
+    try:
+        document = collection.find_one({'_id': chotu_url})
+        original_url = document['originalUrl']
+        update_view(collection, chotu_url)
+
+        console.log(f"[bright_green]Successfully fetched {original_url}" \
+            "[/bright_green]✅")
+        return original_url
+    except Exception as error:
+        console.log(
+            f"[bright_red]Error occured while fetching for {chotu_url}" \
+                "[/bright_red]❌")
+        console.log(f"Error: {error}")
+        return ''
