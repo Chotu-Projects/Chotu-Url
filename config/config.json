@@ -1,7 +1,7 @@
 {
+    "domain": "localhost:5000/",
     "env_path": "",
     
     "expire_days": 60,
     "inactive_days": 15
-
 }
