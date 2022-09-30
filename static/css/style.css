@@ -107,6 +107,15 @@ textarea {
     vertical-align: middle;
     border-radius: 3px;
     border: 1px solid #dfdfdf;
+    color: #444;
+    pointer-events: none;
+}
+
+input[type=url]
+textarea {
+    vertical-align: middle;
+    border-radius: 3px;
+    border: 1px solid #dfdfdf;
     color: #444
 }
 
@@ -271,6 +280,22 @@ section .squarebox {
 }
 
 #formurl input[type=text] {
+    display: table-cell;
+    width: 100%;
+    height: 56px;
+    padding: 10px 16px;
+    font: 17px lato, arial;
+    color: #000;
+    background: #fff;
+    border: 1px solid #bbb;
+    border-right: 0;
+    border-radius: 3px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    box-sizing: border-box
+}
+
+#formurl input[type=url] {
     display: table-cell;
     width: 100%;
     height: 56px;
@@ -457,6 +482,7 @@ footer {
 
 input[type=email],
 input[type=text],
+input[type=url],
 textarea {
     font: 16px lato, arial;
     padding: 8px;
@@ -578,11 +604,11 @@ div.mg_addad1059121 img {
     display: none !important
 }
 
-@media all and (min-width:768px) {
+/* @media all and (min-width:768px) {
     .snbwhatsapp {
         display: none
     }
-}
+} */
 
 #adbox {
     height: auto;
