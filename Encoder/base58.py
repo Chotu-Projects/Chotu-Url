@@ -22,5 +22,3 @@ def base58():
     url_str = "".join(random.sample(base58_symbol_chart, k=3))
 
     return url_str
-
-print(base58())

@@ -115,11 +115,11 @@ def update_view(collection, chotu_url, value=1, extend_date=datetime.utcnow()) -
             }
         )
         console.log(
-            "[bright_green]Successfully updated view and expireInactiveAt" \
+            "[bright_green]Successfully updated view and expireInactiveAt " \
                 f"for `{chotu_url}`[/bright_green]✅")
     except Exception as error:
         console.log(
-            "[bright_red]Error occured while updating view or expireInactiveAt" \
+            "[bright_red]Error occured while updating view or expireInactiveAt " \
                 f"for `{chotu_url}`[/bright_red]❌")
         console.log(f"Error: {error}")
 
@@ -137,12 +137,12 @@ def lookup(collection, chotu_url) -> str:
         original_url = document['originalUrl']
         update_view(collection, chotu_url)
 
-        console.log(f"[bright_green]Successfully fetched {original_url}" \
+        console.log(f"[bright_green]Successfully fetched {original_url} " \
             "[/bright_green]✅")
         return original_url
     except Exception as error:
         console.log(
-            f"[bright_red]Error occured while fetching for {chotu_url}" \
+            f"[bright_red]Error occured while fetching for {chotu_url} " \
                 "[/bright_red]❌")
         console.log(f"Error: {error}")
         return ''
