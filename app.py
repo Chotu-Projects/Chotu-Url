@@ -5,8 +5,10 @@ from flask import Flask, render_template, request, redirect
 from rich.console import Console
 
 import Database.database as dbs
-from Encoder.base58 import base58
+from Encoder.generator import base58, encrypt
 from utils.config import load_config
+
+PYTHONHASHSEED = 0
 
 # config
 config = load_config()
@@ -20,6 +22,7 @@ load_dotenv()
 mongo_uri = getenv("MONGO_URI")
 database = getenv("DATABASE")
 collection_name = getenv("COLLECTION")
+hash_salt = getenv("SALT")
 
 collection = dbs.connect(mongo_uri, database, collection_name)
 dbs.setup(collection)
@@ -30,7 +33,7 @@ app = Flask(__name__)
 @app.route('/<chotu>')
 def home(chotu):
     if chotu:
-        url = dbs.lookup(collection, chotu)
+        url = dbs.lookup(collection, chotu, hash_salt)
         if url:
             return redirect(url, code=302)
         else:
@@ -43,8 +46,10 @@ def chotu():
     found = False
     original_url = request.form.get('url')
     while not found:
-        chotu_url_str = base58()
-        found = dbs.store(collection, chotu_url_str, original_url)
+        chotu_url_str, chotu_hash = base58(hash_salt)
+        # encrypting the original url
+        encrypted_url = encrypt(chotu_url_str, hash_salt, original_url)
+        found = dbs.store(collection, chotu_hash, encrypted_url)
     
     chotu_url = config['domain'] + chotu_url_str
 

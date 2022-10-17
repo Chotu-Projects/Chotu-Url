@@ -3,6 +3,8 @@ from datetime import datetime
 from pymongo import MongoClient
 from rich.console import Console
 
+from Encoder.generator import decrypt, hash_chotu
+
 # setup Python-Rich
 console = Console()
 
@@ -49,93 +51,97 @@ def setup(collection, expire_days=60, inactive_days=15) -> None:
     inactive_seconds = inactive_days * 24 * 60 * 60
 
     try:
-        collection.create_index("expireAt", expireAfterSeconds=expire_seconds)
+        collection.create_index("createdAt", expireAfterSeconds=expire_seconds)
         console.log(
-            "[bright_green]Successfully created expireAt index[/bright_green]✅")
+            "[bright_green]Successfully created createdAt index[/bright_green]✅")
     except Exception as error:
         console.log(
-            "[bright_red]Error occured while creating expireAt index[/bright_red]❌")
+            "[bright_red]Error occured while creating createdAt index[/bright_red]❌")
         console.log(f"Error: {error}")
 
     try:
         collection.create_index(
-            'expireInactiveAt', expireAfterSeconds=inactive_seconds)
+            'lastView', expireAfterSeconds=inactive_seconds)
         console.log(
-            "[bright_green]Successfully created expireInactiveAt index[/bright_green]✅")
+            "[bright_green]Successfully created lastView index[/bright_green]✅")
     except Exception as error:
         console.log(
-            "[bright_red]Error occured while creating expireInactiveAt index[/bright_red]❌")
+            "[bright_red]Error occured while creating lastView index[/bright_red]❌")
         console.log(f"Error: {error}")
 
 
-def exists(collection, url_id: str) -> bool:
+def exists(collection, chotu_hash: str) -> bool:
     """
-    Checks for availability of url_id in database
+    Checks for availability of chotu_hash in database
     """
-    data = collection.find_one({"_id": url_id})
+    data = collection.find_one({"_id": chotu_hash})
     if data:
         return True
     return False
 
 
-def store(collection, chotu_url: str, original_url: str) -> bool:
+def store(collection, chotu_hash:str, encrypted_url: str) -> bool:
     """
     Create and store new document/entry for chotu_url
     """
 
     # check for availability
-    if exists(collection, chotu_url):
+    if exists(collection, chotu_hash):
         return False
 
     document = {
-        "_id": chotu_url,
-        "chotuUrl": chotu_url,
-        "originalUrl": original_url,
+        "_id": chotu_hash,
+        "chotuUrl": chotu_hash,
+        "originalUrl": encrypted_url,
         "views": 0,
         "createdAt": datetime.utcnow(),
-        "expireAt": datetime.utcnow(),
-        "expireInactiveAt": datetime.utcnow()
+        "lastView": datetime.utcnow()
     }
 
     collection.insert_one(document)
     return True
 
 
-def update_view(collection, chotu_url, value=1, extend_date=datetime.utcnow()) -> bool:
+def update_view(collection, chotu_hash, value=1, extend_date=datetime.utcnow()) -> bool:
     """
     Update the view of url and extends the expire-inactive
     """
     # update the view
     try:
         collection.update_one(
-            {"_id": chotu_url}, {
+            {"_id": chotu_hash}, {
                 # increment views
                 "$inc": {"views": value},
-                "$set": {"expireInactiveAt": extend_date}
+                "$set": {"lastView": extend_date}
             }
         )
         console.log(
             "[bright_green]Successfully updated view and expireInactiveAt " \
-                f"for `{chotu_url}`[/bright_green]✅")
+                f"for `{chotu_hash}`[/bright_green]✅")
     except Exception as error:
         console.log(
             "[bright_red]Error occured while updating view or expireInactiveAt " \
-                f"for `{chotu_url}`[/bright_red]❌")
+                f"for `{chotu_hash}`[/bright_red]❌")
         console.log(f"Error: {error}")
 
     return True
 
 
-def lookup(collection, chotu_url) -> str:
+def lookup(collection:str, chotu_url:str, salt:str) -> str:
     """
     Return original url associated with chotu url
     update view and extend inactive date
     """
 
+    # hash the chotu_url
+    chotu_hash = hash_chotu(chotu_url, salt)
+
     try:
-        document = collection.find_one({'_id': chotu_url})
-        original_url = document['originalUrl']
-        update_view(collection, chotu_url)
+        document = collection.find_one({'_id': chotu_hash})
+        encrypted_url = document['originalUrl']
+
+        original_url = decrypt(chotu_url, salt, encrypted_url)
+        update_view(collection, chotu_hash)
 
         console.log(f"[bright_green]Successfully fetched {original_url} " \
             "[/bright_green]✅")
