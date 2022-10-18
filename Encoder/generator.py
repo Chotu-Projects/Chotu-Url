@@ -1,7 +1,8 @@
 import random
 import cryptocode
 
-def base58(salt:str) -> str:
+
+def base58(salt: str) -> str:
     """
     Generates a random 3 bytes long
     BASE58 string
@@ -19,7 +20,7 @@ def base58(salt:str) -> str:
         'n', 'o', 'p', 'q', 'r',
         's', 't', 'u', 'v', 'w',
         'x', 'y', 'z']
-    
+
     url_str = "".join(random.sample(base58_symbol_chart, k=3))
 
     hashed_str = hash_chotu(url_str, salt)
@@ -27,16 +28,16 @@ def base58(salt:str) -> str:
     return url_str, hashed_str
 
 
-def hash_chotu(url_str:str, salt:str) -> int:
+def hash_chotu(url_str: str, salt: str) -> int:
     print(salt + url_str)
     return hash(salt + url_str) % (10 ** 9)
 
 
-def encrypt(chotu:str, salt:str, original_url:str) -> str:
+def encrypt(chotu: str, salt: str, original_url: str) -> str:
     encrypted_url = cryptocode.encrypt(original_url, chotu + salt)
     return encrypted_url
 
 
-def decrypt(chotu:str, salt:str, encrypted_url:str) -> str:
+def decrypt(chotu: str, salt: str, encrypted_url: str) -> str:
     original_url = cryptocode.decrypt(encrypted_url, chotu + salt)
     return original_url

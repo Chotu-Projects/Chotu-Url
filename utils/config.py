@@ -1,5 +1,6 @@
 from json import loads
 
+
 def load_config() -> dict:
     """
     Loads config file

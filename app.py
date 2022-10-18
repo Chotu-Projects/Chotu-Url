@@ -29,6 +29,7 @@ dbs.setup(collection)
 
 app = Flask(__name__)
 
+
 @app.route('/', defaults={'chotu': ''})
 @app.route('/<chotu>')
 def home(chotu):
@@ -50,7 +51,7 @@ def chotu():
         # encrypting the original url
         encrypted_url = encrypt(chotu_url_str, hash_salt, original_url)
         found = dbs.store(collection, chotu_hash, encrypted_url)
-    
+
     chotu_url = config['domain'] + chotu_url_str
 
     data = {
@@ -67,14 +68,17 @@ def chotu():
 
     return render_template('chotu.html', data=data)
 
+
 @app.route('/test_chotu')
 def test_chotu():
     return render_template('chotu.html')
+
 
 # Error Handling
 @app.errorhandler(404)
 def not_found(_):
     return render_template('not_found.html'), 404
+
 
 if __name__ == "__main__":
     app.run(debug=True)

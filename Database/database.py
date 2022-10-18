@@ -80,7 +80,7 @@ def exists(collection, chotu_hash: str) -> bool:
     return False
 
 
-def store(collection, chotu_hash:str, encrypted_url: str) -> bool:
+def store(collection, chotu_hash: str, encrypted_url: str) -> bool:
     """
     Create and store new document/entry for chotu_url
     """
@@ -116,18 +116,18 @@ def update_view(collection, chotu_hash, value=1, extend_date=datetime.utcnow()) 
             }
         )
         console.log(
-            "[bright_green]Successfully updated view and expireInactiveAt " \
-                f"for `{chotu_hash}`[/bright_green]✅")
+            ("[bright_green]Successfully updated view and expireInactiveAt "
+                f"for `{chotu_hash}`[/bright_green]✅"))
     except Exception as error:
         console.log(
-            "[bright_red]Error occured while updating view or expireInactiveAt " \
-                f"for `{chotu_hash}`[/bright_red]❌")
+            ("[bright_red]Error occured while updating view or expireInactiveAt "
+                f"for `{chotu_hash}`[/bright_red]❌"))
         console.log(f"Error: {error}")
 
     return True
 
 
-def lookup(collection:str, chotu_url:str, salt:str) -> str:
+def lookup(collection: str, chotu_url: str, salt: str) -> str:
     """
     Return original url associated with chotu url
     update view and extend inactive date
@@ -143,12 +143,13 @@ def lookup(collection:str, chotu_url:str, salt:str) -> str:
         original_url = decrypt(chotu_url, salt, encrypted_url)
         update_view(collection, chotu_hash)
 
-        console.log(f"[bright_green]Successfully fetched {original_url} " \
-            "[/bright_green]✅")
+        console.log(
+            (f"[bright_green]Successfully fetched {original_url} "
+                "[/bright_green]✅"))
         return original_url
     except Exception as error:
         console.log(
-            f"[bright_red]Error occured while fetching for {chotu_url} " \
-                "[/bright_red]❌")
+            (f"[bright_red]Error occured while fetching for {chotu_url} "
+                "[/bright_red]❌"))
         console.log(f"Error: {error}")
         return ''
