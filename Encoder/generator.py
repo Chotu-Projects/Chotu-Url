@@ -31,7 +31,9 @@ def base58(salt: str) -> str:
 
 def hash_chotu(url_str: str, salt: str) -> int:
     salted_str = url_str + salt
-    return int.from_bytes(hashlib.sha512(salted_str.encode('utf-8')).digest()[:4], byteorder='little')
+    return int.from_bytes(
+        hashlib.sha512(salted_str.encode('utf-8')).digest()[:4],
+        byteorder='little')
 
 
 def encrypt(chotu: str, salt: str, original_url: str) -> str:
