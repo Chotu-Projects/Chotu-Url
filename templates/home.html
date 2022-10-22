@@ -58,21 +58,21 @@
                     <h3 class="aligncenter">Shortened</h3>
                     <p class="aligncenter">Use any link, no matter what size, ShortURL always shortens</p>
                 </div>
-                <!-- <div id="column">
-    <div class="icon"><img src="img/icon-secure.png"></div>
-    <h3 class="aligncenter">Secure</h3>
-    <p class="aligncenter">It is fast and secure, our service have HTTPS protocol and data encryption</p>
-    </div> -->
+                <div id="column">
+                    <div class="icon"><img src="img/icon-secure.png"></div>
+                    <h3 class="aligncenter">Secure</h3>
+                    <p class="aligncenter">Our service have HTTPS protocol and we encrypt data before storing in databases</p>
+                </div>
                 <div id="column">
                     <div class="icon"><img src="{{ url_for('static', filename='img/icon-statistics.png') }}"></div>
                     <h3 class="aligncenter">Statistics</h3>
                     <p class="aligncenter">Check the amount of clicks that your shortened url received</p>
                 </div>
-                <div id="column">
+                <!-- <div id="column">
                     <div class="icon"><img src="{{ url_for('static', filename='img/icon-unique.png') }}"></div>
                     <h3 class="aligncenter">Reliable</h3>
                     <p class="aligncenter">All links that try to disseminate spam, viruses and malware are deleted</p>
-                </div>
+                </div> -->
                 <div id="column">
                     <div class="icon"><img src="{{ url_for('static', filename='img/icon-responsive.png') }}"></div>
                     <h3 class="aligncenter">Devices</h3>
@@ -83,12 +83,12 @@
     </main>
     <footer>
         <div id="footerbox">
-            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL.</div>
+            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL</div>
             <div>Frontend inspired from <a href="https://www.shorturl.at/">Shorturl.at</a></div>
             <ul>
                 <li><a href="{{ url_for('home') }}">Chotu URL</a></li>
                 <li>|</li>
-                <li><a href="#">URL Click Counter</a></li>
+                <li><a href="{{ url_for('counter') }}">URL Click Counter</a></li>
                 <li>|</li>
                 <li><a href="#">Report Malicious URL</a></li>
                 <li>|</li>

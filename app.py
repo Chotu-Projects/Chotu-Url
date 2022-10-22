@@ -8,8 +8,6 @@ import Database.database as dbs
 from Encoder.generator import base58, encrypt
 from utils.config import load_config
 
-PYTHONHASHSEED = 0
-
 # config
 config = load_config()
 
@@ -57,6 +55,7 @@ def chotu():
     data = {
         'url': original_url,
         'chotu_url': chotu_url,
+        'counter_url': f"{config['completeDomain']}count?url={chotu_url_str}",
         'social': {
             'facebook': f'https://www.facebook.com/sharer/sharer.php?u={chotu_url}',
             'twitter': f'https://twitter.com/share?url={chotu_url}',
@@ -69,9 +68,24 @@ def chotu():
     return render_template('chotu.html', data=data)
 
 
-@app.route('/test_chotu')
-def test_chotu():
-    return render_template('chotu.html')
+@app.route('/counter')
+def counter():
+    data = {
+        "host": config['domain']
+    }
+    return render_template('counter.html', data=data)
+
+
+@app.route('/count', methods=['GET'])
+def count():
+    chotu_url = request.args['url']
+
+    if config['domain'] in chotu_url:
+        chotu_url = chotu_url.split('/')[1]
+
+    views = dbs.fetch_views(collection, chotu_url, hash_salt)
+
+    return render_template('count.html', views=views)
 
 
 # Error Handling

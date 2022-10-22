@@ -38,7 +38,7 @@
             </div>
             <p class="boxtextleft">Long URL: <a href="{{ data['url'] }}" target="_blank">{{ data['url'] }}</a><br><br>
 
-                Track <a href="url-total-clicks.php?u=shorturl.at/prVY3">the total of clicks</a> in real-time from your
+                Track <a href="{{ data['counter_url'] }}">the total of clicks</a> in real-time from your
                 shortened URL.<br>
                 Create other <a href="{{ url_for('home') }}">Chotu URL</a>.
             </p>
@@ -58,12 +58,12 @@
     </main>
     <footer>
         <div id="footerbox">
-            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL.</div>
+            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL</div>
             <div>Frontend inspired from <a href="https://www.shorturl.at/">Shorturl.at</a></div>
             <ul>
                 <li><a href="{{ url_for('home') }}">Chotu URL</a></li>
                 <li>|</li>
-                <li><a href="#">URL Click Counter</a></li>
+                <li><a href="{{ url_for('counter') }}">URL Click Counter</a></li>
                 <li>|</li>
                 <li><a href="#">Report Malicious URL</a></li>
                 <li>|</li>
@@ -75,15 +75,6 @@
             </ul>
         </div>
     </footer>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-31391210-44"
-        type="7e22e6dd71687a24be735f18-text/javascript"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-31391210-44');
-    </script>
 </body>
 
 </html>

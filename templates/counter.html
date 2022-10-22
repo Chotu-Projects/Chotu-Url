@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <title>Choturl Click Counter</title>
+    <meta name="description"
+        content="Choturl click counter shows how many clicks your Chotu URL received so far in real time.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <header>
+        <div id="top">
+            <div id="logo"><a href="{{ url_for('home') }}" class="logo">Chotu URL</a></div>
+        </div>
+    </header>
+    <main>
+        <section id="content">
+            <h1>Chotu URL Click Counter</h1>
+            <p>Enter the URL to find out how many clicks it has received so far.</p>
+        </section>
+        <section id="urlbox">
+            <br><br>
+            <form action="/count" method="get">
+                <div id="formurl">
+                    <input type="url" name="url" placeholder="Enter here your Chotu URL" required>
+                    <div id="formbutton">
+                        <input type="submit" value="Track Clicks">
+                    </div>
+                </div>
+            </form>
+            <p style="padding: 0 50px;">Example: {{ data['host'] }}BrUh</p>
+        </section>
+        <section id="content">
+            <p>* Track the total hits of the shortened URL in real time, you do not have to register.</p>
+        </section>
+    </main>
+    <footer>
+        <div id="footerbox">
+            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL</div>
+            <div>Frontend inspired from <a href="https://www.shorturl.at/">Shorturl.at</a></div>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Chotu URL</a></li>
+                <li>|</li>
+                <li><a href="{{ url_for('counter') }}">URL Click Counter</a></li>
+                <li>|</li>
+                <li><a href="#">Report Malicious URL</a></li>
+                <li>|</li>
+                <li><a href="#">Terms of Service</a></li>
+                <li>|</li>
+                <li><a href="#">Privacy</a></li>
+                <li>|</li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+</html>

@@ -153,3 +153,27 @@ def lookup(collection: str, chotu_url: str, salt: str) -> str:
                 "[/bright_red]❌"))
         console.log(f"Error: {error}")
         return ''
+
+
+def fetch_views(collection: str, chotu_url: str, salt: str) -> int:
+    """
+    Return total views/click chotu url got so far
+    """
+
+    # hash the chotu_url
+    chotu_hash = hash_chotu(chotu_url, salt)
+
+    try:
+        document = collection.find_one({'_id': chotu_hash})
+        views = document['views']
+
+        console.log(
+            (f"[bright_green]Successfully fetched views for {chotu_url} "
+                "[/bright_green]✅"))
+        return views
+    except Exception as error:
+        console.log(
+            (f"[bright_red]Error occured while fetching views for {chotu_url} "
+                "[/bright_red]❌"))
+        console.log(f"Error: {error}")
+        return 0

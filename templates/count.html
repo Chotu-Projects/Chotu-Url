@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <title>Total URL Clicks</title>
+    <meta name="description" content="The number of clicks that your Chotu URL received.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <header>
+        <div id="top">
+            <div id="logo"><a href="{{ url_for('home') }}" class="logo">Chotu URL</a></div>
+        </div>
+    </header>
+    <main>
+        <section id="content">
+            <h1>Total URL Clicks</h1>
+            <p>The total number of clicks that your Chotu URL has received so far.</p>
+            <div class="squarebox"><b>{{ views }}</b></div>
+            <p>Our Chotu 👶 will count each click as one hit to the long URL, even if there are multiple clicks from the
+                same person or device. Check <a href="{{ url_for('counter') }}">the total number of clicks</a> for other
+                Chotu URL.<br>
+            <p><a href="{{ url_for('home') }}" class="colorbutton">Create other Chotu URL</a></p>
+        </section>
+    </main>
+    <footer>
+        <div id="footerbox">
+            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL</div>
+            <div>Frontend inspired from <a href="https://www.shorturl.at/">Shorturl.at</a></div>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Chotu URL</a></li>
+                <li>|</li>
+                <li><a href="{{ url_for('counter') }}">URL Click Counter</a></li>
+                <li>|</li>
+                <li><a href="#">Report Malicious URL</a></li>
+                <li>|</li>
+                <li><a href="#">Terms of Service</a></li>
+                <li>|</li>
+                <li><a href="#">Privacy</a></li>
+                <li>|</li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
