@@ -7,30 +7,30 @@
     <meta name="description" content="Chotu URL is a url shortener to turn your Lambu URL to Chotu URL">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="shortcut icon" href="favicon.ico">
+    <!-- <link rel="shortcut icon" href="favicon.ico"> -->
     <meta property="og:title" content="Chotu URL - URL Shortener">
-    <meta property="og:url" content="#">
+    <meta property="og:url" content="https://choturl.xyz">
     <meta property="og:type" content="website">
     <meta property="og:image" content="#">
 </head>
 
 <body>
     <header>
-        <div id="logo"><a href="#" class="logo">Chotu URL</a></div>
+        <div id="logo"><a href="{{ url_for('home')  }}" class="logo">Chotu URL</a></div>
     </header>
     <main>
         <section id="urlbox">
             <h1>Paste the URL to be Chotu(ed)</h1>
             <form action="/chotu" method="POST" enctype="multipart/form-data">
                 <div id="formurl">
-                    <input type="url" name="url" placeholder="Enter the link here" required>
+                    <input type="url" name="url" placeholder="https://example.com" value="http://" required>
                     <div id="formbutton">
                         <input type="submit" value="Chotu This">
                     </div>
                 </div>
             </form>
-            <p class="boxtextcenter">Chotu URL is a fun project website to shorten a URL or reduce a link<br>Use our URL
-                Shortener to create a shortened link making it easy to remember</p>
+            <p class="boxtextcenter">Chotu URL is a fun project website to shorten a URL or reduce a link<br>Use our Chotu URL
+             to create a shortened link making it easy to remember</p>
         </section>
         <section id="content">
             <h2>Simple and fast URL shortener!</h2>
@@ -40,7 +40,7 @@
                     target="_blank">Twitter</a>, <a href="https://www.linkedin.com/" target="_blank">Linked In</a> and
                 top sites on the Internet, just paste the long URL and click the Shorten URL button. On the next screen,
                 copy the shortened URL and share it on websites, chat and e-mail. After shortening the URL, check <a
-                    href="url-click-counter.php">how many clicks it received</a>.</p>
+                    href="{{ url_for('counter') }}">how many clicks it received</a>.</p>
             <h2>Shorten, share and track</h2>
             <p>Your shortened URLs can be used in publications, documents, advertisements, blogs, forums, instant
                 messages, and other locations. Track statistics for your business and projects by monitoring the number
@@ -56,7 +56,7 @@
                 <div id="column">
                     <div class="icon"><img src="{{ url_for('static', filename='img/icon-url.png') }}"></div>
                     <h3 class="aligncenter">Shortened</h3>
-                    <p class="aligncenter">Use any link, no matter what size, ShortURL always shortens</p>
+                    <p class="aligncenter">Use any link, no matter what size, Chotu URL always shortens</p>
                 </div>
                 <div id="column">
                     <div class="icon"><img src="{{ url_for('static', filename='img/icon-secure.png') }}"></div>
@@ -66,7 +66,7 @@
                 <div id="column">
                     <div class="icon"><img src="{{ url_for('static', filename='img/icon-statistics.png') }}"></div>
                     <h3 class="aligncenter">Statistics</h3>
-                    <p class="aligncenter">Check the amount of clicks that your shortened url received</p>
+                    <p class="aligncenter">Check the amount of clicks that your Chotu url received</p>
                 </div>
                 <!-- <div id="column">
                     <div class="icon"><img src="{{ url_for('static', filename='img/icon-unique.png') }}"></div>
@@ -81,25 +81,7 @@
             </div>
         </div>
     </main>
-    <footer>
-        <div id="footerbox">
-            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL</div>
-            <div>Frontend inspired from <a href="https://www.shorturl.at/">Shorturl.at</a></div>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Chotu URL</a></li>
-                <li>|</li>
-                <li><a href="{{ url_for('counter') }}">URL Click Counter</a></li>
-                <li>|</li>
-                <li><a href="#">Report Malicious URL</a></li>
-                <li>|</li>
-                <li><a href="#">Terms of Service</a></li>
-                <li>|</li>
-                <li><a href="#">Privacy</a></li>
-                <li>|</li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </footer>
+    {% include "footer.html" %}
 </body>
 
 </html>
