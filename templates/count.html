@@ -27,25 +27,7 @@
             <p><a href="{{ url_for('home') }}" class="colorbutton">Create other Chotu URL</a></p>
         </section>
     </main>
-    <footer>
-        <div id="footerbox">
-            <div>© 2022 Chotu URL - Converts Lambu URL to Chotu URL</div>
-            <div>Frontend inspired from <a href="https://www.shorturl.at/">Shorturl.at</a></div>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Chotu URL</a></li>
-                <li>|</li>
-                <li><a href="{{ url_for('counter') }}">URL Click Counter</a></li>
-                <li>|</li>
-                <li><a href="#">Report Malicious URL</a></li>
-                <li>|</li>
-                <li><a href="#">Terms of Service</a></li>
-                <li>|</li>
-                <li><a href="#">Privacy</a></li>
-                <li>|</li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-    </footer>
+    {% include "footer.html" %}
 </body>
 
 </html>
