@@ -1,7 +1,8 @@
 from os import getenv
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
+from flask import redirect, send_from_directory
 from rich.console import Console
 
 import Database.database as dbs
@@ -71,7 +72,7 @@ def chotu():
 @app.route('/counter')
 def counter():
     data = {
-        "host": config['domain']
+        "host": config['completeDomain']
     }
     return render_template('counter.html', data=data)
 
@@ -88,10 +89,29 @@ def count():
     return render_template('count.html', views=views)
 
 
+@app.route('/underdev')
+def underdev():
+    return render_template('underdev.html')
+
+
 # Error Handling
 @app.errorhandler(404)
 def not_found(_):
     return render_template('not_found.html'), 404
+
+
+# Robots.txt and Sitemap
+@app.route('/sitemap.xml')
+@app.route('/robots.txt')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        app.static_folder, 'favicon.ico',
+        mimetype='image/vnd.microsoft.icon')
 
 
 if __name__ == "__main__":
