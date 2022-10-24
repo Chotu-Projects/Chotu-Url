@@ -8,7 +8,7 @@
         content="Choturl click counter shows how many clicks your Chotu URL received so far in real time.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="{{ url_for('favicon') }}">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
             <br><br>
             <form action="/count" method="get">
                 <div id="formurl">
-                    <input type="url" name="url" placeholder="Enter here your Chotu URL" required>
+                    <input type="url" name="url" placeholder="{{ data['host'] }}example" value="{{ data['host'] }}" required>
                     <div id="formbutton">
                         <input type="submit" value="Track Clicks">
                     </div>
