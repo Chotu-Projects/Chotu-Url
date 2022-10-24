@@ -7,7 +7,7 @@
     <meta name="description" content="Chotu URL is a url shortener to turn your Lambu URL to Chotu URL">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+    <link rel="shortcut icon" href="{{ url_for('favicon') }}">
     <meta property="og:title" content="Chotu URL - URL Shortener">
     <meta property="og:url" content="https://choturl.xyz">
     <meta property="og:type" content="website">
@@ -37,7 +37,7 @@
             <p>Chotu URL allows to reduce long links from <a href="https://www.instagram.com/"
                     target="_blank">Instagram</a>, <a href="https://www.facebook.com/" target="_blank">Facebook</a>, <a
                     href="https://www.youtube.com/" target="_blank">YouTube</a>, <a href="https://www.twitter.com/"
-                    target="_blank">Twitter</a>, <a href="https://www.linkedin.com/" target="_blank">Linked In</a> and
+                    target="_blank">Twitter</a>, <a href="https://www.linkedin.com/" target="_blank">LinkedIn</a> and
                 top sites on the Internet, just paste the long URL and click the Shorten URL button. On the next screen,
                 copy the shortened URL and share it on websites, chat and e-mail. After shortening the URL, check <a
                     href="{{ url_for('counter') }}">how many clicks it received</a>.</p>
