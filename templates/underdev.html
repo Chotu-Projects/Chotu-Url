@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('favicon') }}">
+    <title>404 Page Not Found</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/not-found.css') }}">
+</head>
+
+<body>
+    <main>
+        <div id="top"><a href="{{ url_for('home') }}" class="logo">Chotu URL</a></div>
+        <div class="tenor-gif-embed" data-postid="25794812" data-share-method="host" data-aspect-ratio="2.99065"
+            data-width="100%"><a href="https://tenor.com/view/excited-gif-25794812">Excited GIF</a>from <a
+                href="https://tenor.com/search/excited-gifs">Excited GIFs</a></div>
+        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    </main>
+    {% include "footer.html" %}
+</body>
+
+</html>
