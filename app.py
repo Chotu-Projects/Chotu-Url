@@ -81,8 +81,12 @@ def counter():
 def count():
     chotu_url = request.args['url']
 
-    if config['domain'] in chotu_url:
-        chotu_url = chotu_url.split('/')[1]
+    print(chotu_url)
+    if (config['domain'] in chotu_url) \
+            or ('http://' + config['domain']) in chotu_url \
+            or ('https://' + config['domain']) in chotu_url:
+
+        chotu_url = chotu_url.split(config['domain'][-5:])[1]
 
     views = dbs.fetch_views(collection, chotu_url, hash_salt)
 
